@@ -1,9 +1,7 @@
 import React from 'react'
-// import * as BooksAPI from "./Components/Utils/BooksAPI";
-import './App.css'
-import Books from './Components/Books/Books';
-import Dashboard from "./Components/Dashboard/Dashboard";
-import Search from "./Components/Search/Search";
+// import * as BooksAPI from "../../Components/Utils/BooksAPI";
+import Dashboard from "../../Components/Dashboard/Dashboard";
+import Search from "../../Components/Search/Search";
 
 
 const Reading = [
@@ -80,8 +78,8 @@ class Home extends React.Component {
               <div className="list-books-content">
                 <div>
                   <Dashboard shelfTitle="Currently Reading" booksList={Reading} />
-                  <Dashboard shelfTitle="Want to Read" booksList={Reading} />
-                  <Dashboard shelfTitle="Read" booksList={Reading} />
+                  <Dashboard shelfTitle="Want to Read" booksList={BooksToRead} />
+                  <Dashboard shelfTitle="Read" booksList={BooksRead} />
                 </div>
               </div>
               <div className="open-search">
