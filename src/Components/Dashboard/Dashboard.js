@@ -12,7 +12,8 @@ const Dashboard = props => {
 };
 
 Dashboard.propTypes = {
-
+    booksList: PropTypes.array.isRequired,
+    shelfTitle: PropTypes.string.isRequired,
 };
 
 export default Dashboard;
