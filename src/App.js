@@ -68,7 +68,7 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         <Switch>
-          <Route exact path="/search" render={() => (<Search closeSearch={() => this.closeSearch} />)} />
+          <Route exact path="/search" render={() => (<Search booksList={ [...Reading,...BooksToRead,...BooksRead] } />)} />
           <Route exact path="/" render={() => (<Home reading={Reading} booksToRead={BooksToRead} booksRead={BooksRead} />)} />
         </Switch>
       </div>

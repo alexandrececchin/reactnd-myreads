@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
+import Dashboard from "../Dashboard/Dashboard";
 
 const Search = props => {
     return (
@@ -25,14 +26,14 @@ const Search = props => {
                 </div>
             </div>
             <div className="search-books-results">
-                <ol className="books-grid"></ol>
+                <Dashboard shelfTitle="Read" booksList={props.booksList} />
             </div>
         </div>
     );
 };
 
 Search.propTypes = {
-
+    booksList: PropTypes.array.isRequired
 };
 
 export default Search;
