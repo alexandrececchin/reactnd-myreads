@@ -28,14 +28,15 @@ const Search = props => {
                 </div>
             </div>
             <div className="search-books-results">
-                <Dashboard shelfTitle="Result" booksList={props.booksList} />
+                <Dashboard shelfTitle="Result" booksList={props.booksList} moveBookToShelf={props.moveBookToShelf} />
             </div>
         </div>
     );
 };
 
 Search.propTypes = {
-    booksList: PropTypes.array.isRequired
+    booksList: PropTypes.array.isRequired,
+    moveBookToShelf: PropTypes.func.isRequired
 };
 
 export default Search;

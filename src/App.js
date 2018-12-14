@@ -24,14 +24,19 @@ class BooksApp extends React.Component {
     });
   }
 
-  queryChangeHandler =(text) => {
-    this.setState({query: text});
+  queryChangeHandler = (text) => {
+    this.setState({ query: text });
   }
 
-  search =()=>{
-    console.log('Search by '+ this.state.query)
+  search = () => {
+    console.log('Search by ' + this.state.query)
     api.search(this.state.query).then((res) => this.setState({ books: res }));
   }
+
+  moveBookToShelf = (book, shelf) => {
+    api.update(book, shelf).then((res) => this.fetchAllBooks());
+  }
+
 
   render() {
     const booksRead = this.state.books.filter(books => books.shelf === 'read');
@@ -39,11 +44,13 @@ class BooksApp extends React.Component {
     const reading = this.state.books.filter(books => books.shelf === 'currentlyReading');
     return (
       <div className="app">
-      <div className="ui active inline loader" style={{display: 'none'}} ></div>
+        <div className="loader2">
+          <div className="ui active inline loader" style={{ display: 'none' }} />
+        </div>
         <Switch>
-          <Route exact path="/search" render={() => (<Search booksList={this.state.books} fetchAllBooks={this.fetchAllBooks}
-           query={this.state.query} queryChange={this.queryChangeHandler} search={this.search}/>)} />
-          <Route exact path="/" render={() => (<Home reading={reading} booksToRead={booksToRead} booksRead={booksRead} />)} />
+          <Route exact path="/search" render={() => (<Search booksList={this.state.books} fetchAllBooks={this.fetchAllBooks} moveBookToShelf={this.moveBookToShelf}
+            query={this.state.query} queryChange={this.queryChangeHandler} search={this.search} />)} />
+          <Route exact path="/" render={() => (<Home reading={reading} booksToRead={booksToRead} booksRead={booksRead} moveBookToShelf={this.moveBookToShelf} />)} />
         </Switch>
       </div>
     )

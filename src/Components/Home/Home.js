@@ -13,9 +13,9 @@ const Home = (props) => {
               </div>
               <div className="list-books-content">
                 <div>
-                  <Dashboard shelfTitle="Currently Reading" booksList={props.reading} />
-                  <Dashboard shelfTitle="Want to Read" booksList={props.booksToRead} />
-                  <Dashboard shelfTitle="Read" booksList={props.booksRead} />
+                  <Dashboard shelfTitle="Currently Reading" booksList={props.reading} moveBookToShelf={props.moveBookToShelf}/>
+                  <Dashboard shelfTitle="Want to Read" booksList={props.booksToRead} moveBookToShelf={props.moveBookToShelf}/>
+                  <Dashboard shelfTitle="Read" booksList={props.booksRead} moveBookToShelf={props.moveBookToShelf}/>
                 </div>
               </div>
               <div className="open-search">
@@ -32,6 +32,7 @@ Home.prototype = {
   booksList: PropTypes.array.isRequired,
   booksToRead: PropTypes.array.isRequired,
   booksRead: PropTypes.array.isRequired,
+  moveBookToShelf: PropTypes.func.isRequired
 }
 
 export default Home;
