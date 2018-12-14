@@ -9,7 +9,7 @@ const Search = props => {
         <div className="search-books">
             <div className="search-books-bar">
                 <Link to="/">
-                    <button className="close-search">Close</button>
+                    <button className="close-search" onClick={() => props.fetchAllBooks()}>Close</button>
                 </Link>
 
                 <div className="search-books-input-wrapper">
@@ -21,12 +21,14 @@ const Search = props => {
               However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
               you don't find a specific author or title. Every search is limited by search terms.
             */}
-                    <input type="text" placeholder="Search by title or author" />
-
+                    <input type="text" style={{ width: '90%' }} placeholder="Search by title or author" value={props.value} onChange={(event)=> props.queryChange(event.target.value)}/>
+                    <button className="ui primary button" onClick={() => props.search()} disabled={props.value === ''}>
+                        <i className="search icon" />
+                    </button>
                 </div>
             </div>
             <div className="search-books-results">
-                <Dashboard shelfTitle="Read" booksList={props.booksList} />
+                <Dashboard shelfTitle="Result" booksList={props.booksList} />
             </div>
         </div>
     );
