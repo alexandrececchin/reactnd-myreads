@@ -7,13 +7,16 @@ import Dashboard from "../Dashboard/Dashboard";
 const Search = props => {
     return (
         <div className="search-books">
+            <Link to="/">
+                <button className="close-search ui icon button primary" onClick={() => props.fetchAllBooks()}>
+                    <i className="arrow left icon"></i>
+                </button>
+            </Link>
             <div className="search-books-bar">
-                <Link to="/">
-                    <button className="close-search" onClick={() => props.fetchAllBooks()}>Close</button>
-                </Link>
 
-                <div className="search-books-input-wrapper">
-                    <input type="text" style={{ width: '90%' }} placeholder="Search by title or author" value={props.value} onChange={(event) => props.queryChange(event.target.value)} />
+                <div className="ui icon input">
+                    <input type="text" placeholder="Search by title or author" value={props.value}
+                        onChange={(event) => props.queryChange(event.target.value)} />
                     <button className="ui primary button" onClick={() => props.search()} disabled={props.value === ''}>
                         <i className="search icon" />
                     </button>
@@ -22,7 +25,7 @@ const Search = props => {
             <div className="search-books-results">
                 {props.errorMsg === '' ?
                     <Dashboard shelfTitle="Result" booksList={props.booksList} moveBookToShelf={props.moveBookToShelf} />
-                    : <h2 style={{textAlign: 'center'}}><strong>{props.errorMsg}</strong></h2>
+                    : <h2 style={{ textAlign: 'center' }}><strong>{props.errorMsg}</strong></h2>
                 }
             </div>
         </div>

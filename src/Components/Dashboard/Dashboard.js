@@ -5,7 +5,7 @@ import Books from '../Books/Books';
 const Dashboard = props => {
     return (
         <div className="bookshelf">
-            <h2 className="bookshelf-title">{props.shelfTitle}</h2>
+            <h2 className="bookshelf-title ui center icon header">{props.shelfTitle}</h2>
             <Books booksList={props.booksList} moveBookToShelf={props.moveBookToShelf}/>
         </div>
     );
