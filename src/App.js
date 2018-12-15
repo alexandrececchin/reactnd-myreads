@@ -59,7 +59,7 @@ class BooksApp extends React.Component {
 
     return (
       <div className="app">
-        <div className={`ui ${this.state.showLoad} dimmer indeterminate`}>
+        <div className={`ui ${this.state.showLoad} dimmer indeterminate`} style={{position: 'fixed'}}>
           <div className="ui big text loader">Loading...</div>
         </div>
         <Switch>
