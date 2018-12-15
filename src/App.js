@@ -25,18 +25,20 @@ class BooksApp extends React.Component {
   }
 
   queryChangeHandler = (text) => {
-    this.setState({ query: text });
+    this.setState({ query: text }, function a() { this.search() });
   }
 
   search = () => {
-    this.showLoader();
-    api.search(this.state.query).then(res => {
-      if (Array.isArray(res)) {
-        this.setState({ books: res, errorMsg: '' }, function a() { this.removeLoader() });
-      } else if (res.error) {
-        this.setState({ books: [], errorMsg: '0 Items found' }, function a() { this.removeLoader() });
-      }
-    });
+    if (this.state.query) {
+      this.showLoader();
+      api.search(this.state.query).then(res => {
+        if (Array.isArray(res)) {
+          this.setState({ books: res, errorMsg: '' }, function a() { this.removeLoader() });
+        } else if (res.error) {
+          this.setState({ books: [], errorMsg: '0 Items found' }, function a() { this.removeLoader() });
+        }
+      });
+    }
   }
 
   moveBookToShelf = (book, shelf) => {
@@ -59,7 +61,7 @@ class BooksApp extends React.Component {
 
     return (
       <div className="app">
-        <div className={`ui ${this.state.showLoad} dimmer indeterminate`} style={{position: 'fixed'}}>
+        <div className={`ui ${this.state.showLoad} dimmer indeterminate`} style={{ position: 'fixed' }}>
           <div className="ui big text loader">Loading...</div>
         </div>
         <Switch>

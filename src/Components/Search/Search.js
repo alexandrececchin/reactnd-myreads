@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import Dashboard from "../Dashboard/Dashboard";
+import { DebounceInput } from 'react-debounce-input';
 
 const Search = props => {
     return (
@@ -13,13 +14,10 @@ const Search = props => {
                 </button>
             </Link>
             <div className="search-books-bar">
-
                 <div className="ui icon input">
-                    <input type="text" placeholder="Search by title or author" value={props.value}
-                        onChange={(event) => props.queryChange(event.target.value)} />
-                    <button className="ui primary button" onClick={() => props.search()} disabled={props.value === ''}>
-                        <i className="search icon" />
-                    </button>
+                    <DebounceInput debounceTimeout={500} placeholder="Search by title or author"
+                        value={props.value} onChange={event => props.queryChange(event.target.value)} />
+                    <i className="search icon" />
                 </div>
             </div>
             <div className="search-books-results">
