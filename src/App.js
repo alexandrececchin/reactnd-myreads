@@ -41,9 +41,12 @@ class BooksApp extends React.Component {
     }
   }
 
-  moveBookToShelf = (book, shelf) => {
+  moveBookToShelf = (book, newShelf) => {
     this.showLoader();
-    api.update(book, shelf).then((res) => this.fetchAllBooks());
+    api.update(book, newShelf).then((res) => {
+      let books = this.state.books.map(b => book.id !== b.id ? b : Object.assign({}, b, {shelf: newShelf}) )
+      this.setState({ books: books }, function a() { this.removeLoader(); });
+    });
   }
 
   showLoader = () => {
