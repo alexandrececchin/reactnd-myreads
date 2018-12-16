@@ -8,6 +8,7 @@ import Home from "./Components/Home/Home";
 class BooksApp extends React.Component {
   state = {
     books: [],
+    searchResults: [],
     query: '',
     showLoad: '',
     errorMsg: ''
@@ -20,7 +21,7 @@ class BooksApp extends React.Component {
   fetchAllBooks = () => {
     this.showLoader();
     api.getAll().then((books) => {
-      this.setState({ books }, function a() { this.removeLoader(); });
+      this.setState({ books: books, searchResults: [] }, function a() { this.removeLoader(); });
     });
   }
 
@@ -28,12 +29,21 @@ class BooksApp extends React.Component {
     this.setState({ query: text }, function a() { this.search() });
   }
 
+  findShelf = (bookId) => {
+    let bookShelf = this.state.books.filter(b => b.id === bookId).map(b => { return b.shelf });
+    return bookShelf && bookShelf.length > 0 ? bookShelf : 'none';
+  }
+
   search = () => {
     if (this.state.query) {
       this.showLoader();
       api.search(this.state.query).then(res => {
         if (Array.isArray(res)) {
-          this.setState({ books: res, errorMsg: '' }, function a() { this.removeLoader() });
+          let searchResults = res.map((book) => {
+            book.shelf = this.findShelf(book.id);
+            return book;
+          });
+          this.setState({ searchResults: searchResults, errorMsg: '' }, function a() { this.removeLoader() });
         } else if (res.error) {
           this.setState({ books: [], errorMsg: '0 Items found' }, function a() { this.removeLoader() });
         }
@@ -44,8 +54,9 @@ class BooksApp extends React.Component {
   moveBookToShelf = (book, newShelf) => {
     this.showLoader();
     api.update(book, newShelf).then((res) => {
-      let books = this.state.books.map(b => book.id !== b.id ? b : Object.assign({}, b, {shelf: newShelf}) )
-      this.setState({ books: books }, function a() { this.removeLoader(); });
+      let books = this.state.books.map(b => book.id !== b.id ? b : Object.assign({}, b, { shelf: newShelf }));
+      let searchResults = this.state.searchResults.map(b => book.id !== b.id ? b : Object.assign({}, b, { shelf: newShelf }));
+      this.setState({ books: books, searchResults: searchResults }, function a() { this.removeLoader(); });
     });
   }
 
@@ -61,6 +72,7 @@ class BooksApp extends React.Component {
     const booksRead = this.state.books.filter(books => books.shelf === 'read');
     const booksToRead = this.state.books.filter(books => books.shelf === 'wantToRead');
     const reading = this.state.books.filter(books => books.shelf === 'currentlyReading');
+    const searchResults = (this.state.errorMsg === '' && this.state.searchResults.length === 0) ? this.state.books : this.state.searchResults;
 
     return (
       <div className="app">
@@ -68,7 +80,7 @@ class BooksApp extends React.Component {
           <div className="ui big text loader">Loading...</div>
         </div>
         <Switch>
-          <Route exact path="/search" render={() => (<Search booksList={this.state.books} fetchAllBooks={this.fetchAllBooks}
+          <Route exact path="/search" render={() => (<Search booksList={searchResults} fetchAllBooks={this.fetchAllBooks}
             errorMsg={this.state.errorMsg} moveBookToShelf={this.moveBookToShelf} query={this.state.query}
             queryChange={this.queryChangeHandler} search={this.search} />)} />
 
