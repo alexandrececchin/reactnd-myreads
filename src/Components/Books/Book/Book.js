@@ -5,9 +5,10 @@ const Book = props => {
     const thumbnail = props.book.imageLinks && props.book.imageLinks.thumbnail ? props.book.imageLinks.thumbnail: '';
     const autor = props.book.authors ? props.book.authors: '';
     const title = props.book.title ? props.book.title: '';
-    const shelf = props.book.shelf;
+    const shelf = props.book.shelf ? props.book.shelf : 'none';
     return (
         <div className="book">
+            shelf - {shelf}
             <div className="book-top">
                 <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${thumbnail})` }}></div>
                 <div className="book-shelf-changer">
